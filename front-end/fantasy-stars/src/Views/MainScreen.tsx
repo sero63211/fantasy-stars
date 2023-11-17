@@ -1,68 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Components/Card'; // Importieren Sie die Card-Komponente
 import Footballer from '../Models/footballer';
+import { Padding } from '@mui/icons-material';
 
 const MainScreen: React.FC = () => {
-    // Beispiel-Daten für Footballer
-    const [footballers, setFootballers] = useState<Footballer[]>([
-      {
-          name: 'Max Müller',
-          klub: 'FC Bayern',
-          nationalitaet: 'Deutschland',
-          alter: 28,
-          position: 'Mittelfeld',
-          bild: 'url_zum_bild_von_Max',
-          marktwert: 7500000
-      },
-      {
-          name: 'John Smith',
-          klub: 'Chelsea FC',
-          nationalitaet: 'England',
-          alter: 24,
-          position: 'Stürmer',
-          bild: 'url_zum_bild_von_John',
-          marktwert: 10000000
-      },
-      {
-          name: 'Pedro Gonzalez',
-          klub: 'FC Barcelona',
-          nationalitaet: 'Spanien',
-          alter: 30,
-          position: 'Verteidiger',
-          bild: undefined,
-          marktwert: 6000000
-      },
-      {
-          name: 'Luca Rossi',
-          klub: 'Juventus Turin',
-          nationalitaet: 'Italien',
-          alter: 27,
-          position: 'Torwart',
-          bild: undefined,
-          marktwert: 5500000
-      },
-      {
-          name: 'Jean Lefebvre',
-          klub: 'Paris Saint-Germain',
-          nationalitaet: 'Frankreich',
-          alter: 22,
-          position: 'Stürmer',
-          bild: 'url_zum_bild_von_Jean',
-          marktwert: 8000000
-      }
-  ]);
+
+    const [footballers, setFootballers] = useState<Footballer[]>([]);
+    useEffect(() => {
+        const fetchFootballers = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/footballer/getAllFootballers');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setFootballers(data);
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Fußballspieler:", error);
+            }
+        };
+
+        fetchFootballers();
+    }, []);
   
 
-  return (
-    <div>
-        <h1>List of Footballers</h1>
-        <div style={{ display: 'flex', overflowX: 'scroll', padding: '10px' }}>
-            {footballers.map((footballer, index) => (
-                <Card key={index} footballer={footballer} />
-            ))}
+    return (
+        <div>
+            <h1>List of Footballers</h1>
+            <div style={{ display: 'flex', overflowX: 'scroll', padding: '10px' }}>
+                {footballers.map((footballer, index) => (
+                    <Card key={index} footballer={footballer} />
+                ))}
+            </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default MainScreen;

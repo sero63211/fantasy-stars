@@ -4,7 +4,7 @@ interface Footballer {
     nationalitaet: string;
     alter: number;
     position: string;
-    bild?: string; // Optional, da nicht alle Spieler ein Bild haben müsse
+    bild?: string;
     marktwert: number;
 }
 

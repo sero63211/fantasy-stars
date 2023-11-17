@@ -22,8 +22,8 @@ const fotballerSchema = new mongoose.Schema({
         required: true
     },
     bild: {
-        type: String, // URL oder Pfad zum Bild
-        required: false // optional, da nicht alle Spieler ein Bild haben müssen
+        type: String, 
+        required: false 
     },
     marktwert: {
         type: Number,

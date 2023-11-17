@@ -13,11 +13,13 @@ MongoClient.connect(process.env.MONGODB_URI, (err, client) => {
 
     const db = client.db("fantasy-stars");
 
-    // Login-Endpoint
     router.post("/create", (req, res) => {
         FootballPlayerController.createFotballer(req,res);
     });
 
+    router.get("/getAllFootballers", (req, res) => {
+        FootballPlayerController.getAllFootballers(req,res);
+    });
 
 });
 
