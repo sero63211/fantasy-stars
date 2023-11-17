@@ -1,5 +1,5 @@
 // Importieren Sie das Mongoose-Modell
-const User = require("../models/users");
+const User = require("../models/user");
 
 class UserController {
     static async handleLogin(req, res) {

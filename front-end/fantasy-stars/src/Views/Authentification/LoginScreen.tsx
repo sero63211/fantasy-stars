@@ -26,7 +26,7 @@ export default function LoginScreen() {
   
   <div className="login-container">
     <div className="login-box">
-    <h1>Fantas Stars</h1>
+    <h1>Fantasy Stars</h1>
       <h2>Log dich ein!</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-container">
