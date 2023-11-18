@@ -1,4 +1,5 @@
 interface Footballer {
+    id: string;
     name: string;
     klub: string;
     nationalitaet: string;
@@ -6,6 +7,7 @@ interface Footballer {
     position: string;
     bild?: string;
     marktwert: number;
+    likes: number;
 }
 
 export default Footballer;

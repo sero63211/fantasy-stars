@@ -13,13 +13,19 @@ MongoClient.connect(process.env.MONGODB_URI, (err, client) => {
 
     const db = client.db("fantasy-stars");
 
-    router.post("/create", (req, res) => {
-        FootballPlayerController.createFotballer(req,res);
-    });
+    router.post("/create", FootballPlayerController.createFootballers);
 
     router.get("/getAllFootballers", (req, res) => {
         FootballPlayerController.getAllFootballers(req,res);
     });
+
+    router.delete("/deleteAllFootballers", (req, res) => {
+        FootballPlayerController.deleteAllFootballers(req,res);
+    });
+    router.put('/likes/:id', FootballPlayerController.incrementUserLikes);
+    
+    router.put('/footballers/dislikes/:id', FootballPlayerController.decrementUserLikes);
+
 
 });
 
