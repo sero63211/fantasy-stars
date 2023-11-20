@@ -46,31 +46,79 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange }) => {
         onCardChange();
     };
     return (
-        <div style={{ border: '1px solid black', padding: '10px', margin: '10px', textAlign: 'center' }}>
-            <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
+        <div style={{
+            border: '1px solid black', 
+            borderRadius: '20px',
+            padding: '10px', 
+            margin: '10px', 
+            textAlign: 'center',
+            backgroundColor: '#fdd835', 
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center',
+            overflow: 'hidden',
+            width: '250px',
+            height: '350px', 
+        }}>
+            <div style={{
+                width: '100%', // Full width
+                height: '140px', // Fix height of image container
+                position: 'relative',
+                marginBottom: '10px', // Space below the image container
+            }}>
                 {footballer.bild ? 
                     <img 
                         src={footballer.bild} 
                         alt={footballer.name} 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%', 
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            borderRadius: '10px'
+                        }} 
                     /> 
-                    : <p>Kein Bild vorhanden!</p>}
+                    : <p style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '100%',
+                        textAlign: 'center'
+                    }}>Kein Bild vorhanden!</p>
+                }
             </div>
-            <h2>{footballer.name}</h2>
-            <p><strong>Klub:</strong> {footballer.klub}</p>
-            <p><strong>Alter:</strong> {footballer.alter}</p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <h3 style={{ margin: '5px 0' }}>{footballer.name}</h3>
+            <p style={{ margin: '5px 0' }}><strong>Klub:</strong> {footballer.klub}</p>
+            <p style={{ margin: '5px 0' }}><strong>Alter:</strong> {footballer.alter}</p>
+            <div style={{
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                marginTop: 'auto', // Pushes the likes section to the bottom
+            }}>
                 <img 
                     src={isHeartFilled ? heartFillIcon : heartIcon} 
                     alt="Herz" 
-                    style={{ cursor: 'pointer', width: '24px', height: '24px' }} 
+                    style={{ 
+                        cursor: 'pointer', 
+                        width: '24px', 
+                        height: '24px',
+                        marginRight: '10px'
+                    }} 
                     onClick={handleHeartClick} 
                 />
-                <span style={{ marginLeft: '10px' }}>Gefällt {footballer.likes} mal</span>
+                <span>Gefällt {footballer.likes} mal</span>
             </div>
         </div>
     );
 };
+    
+    
 
 
 
