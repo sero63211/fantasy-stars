@@ -24,7 +24,7 @@ MongoClient.connect(process.env.MONGODB_URI, (err, client) => {
     });
     router.put('/likes/:id', FootballPlayerController.incrementUserLikes);
     
-    router.put('/footballers/dislikes/:id', FootballPlayerController.decrementUserLikes);
+    router.put('/dislikes/:id', FootballPlayerController.decrementUserLikes);
 
 
 });

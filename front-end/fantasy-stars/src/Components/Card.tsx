@@ -10,31 +10,40 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ footballer, onCardChange }) => {
     const [isHeartFilled, setIsHeartFilled] = useState(false);
+
     useEffect(() => {
-        // Überprüfen, ob der Like-Status im Local Storage gespeichert ist
         const liked = localStorage.getItem(`liked-${footballer.id}`);
-        if (liked === 'true') {
-            setIsHeartFilled(true);
-        }
+        setIsHeartFilled(liked === 'true');
+        console.log(`[useEffect] Initialer Zustand von isHeartFilled für ${footballer.name}:`, liked === 'true');
     }, [footballer.id]);
+
     const updateLikes = async (increment: boolean) => {
         const endpoint = `http://localhost:3001/footballer/${increment ? 'likes' : 'dislikes'}/${footballer.id}`;
+        console.log(`[updateLikes] Senden einer Anfrage an: ${endpoint}`);
+
         try {
             const response = await fetch(endpoint, { method: 'PUT' });
-            console.log('Response:', response);
+            console.log('[updateLikes] Response:', response);
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             onCardChange(); 
         } catch (error) {
-            console.error("Fehler beim Aktualisieren der Likes:", error);
+            console.error("[updateLikes] Fehler beim Aktualisieren der Likes:", error);
         }
     };
 
-    const handleHeartClick = () => {
-        setIsHeartFilled(!isHeartFilled);
-        updateLikes(!isHeartFilled); 
-        localStorage.setItem(`liked-${footballer.id}`, (!isHeartFilled).toString());
+    const handleHeartClick = async () => {
+        const newHeartFilledState = !isHeartFilled;
+        console.log(`[handleHeartClick] Benutzer hat auf Herz geklickt. Neuer Zustand: ${newHeartFilledState}`);
+
+        setIsHeartFilled(newHeartFilledState);
+        await updateLikes(newHeartFilledState); 
+        localStorage.setItem(`liked-${footballer.id}`, newHeartFilledState.toString());
+        console.log(`[handleHeartClick] LocalStorage aktualisiert für ${footballer.name}:`, newHeartFilledState);
+
+        onCardChange();
     };
     return (
         <div style={{ border: '1px solid black', padding: '10px', margin: '10px', textAlign: 'center' }}>
