@@ -28,8 +28,6 @@ class FootballPlayerController {
         }
     }
 
-    
-
 
     static async getAllFootballers(req, res) {
         try {
@@ -41,6 +39,30 @@ class FootballPlayerController {
         } catch (error) {
             console.error("Fehler beim Abrufen der Fußballspieler:", error.message);
             // Fehlerbehandlung, wenn beim Abrufen ein Problem auftritt
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    static async updateFootballer(req, res) {
+        try {
+            const { id } = req.params; // ID des Fußballspielers aus den URL-Parametern extrahieren
+            const updateData = req.body; // Aktualisierungsdaten aus dem Request-Body extrahieren
+
+            // Fußballspieler finden und aktualisieren
+            const updatedFootballer = await Footballer.findOneAndUpdate(
+                { id: id }, // Kriterium für die Suche nach dem Fußballspieler
+                updateData, // Aktualisierungsdaten
+                { new: true } // Gibt das aktualisierte Dokument zurück
+            );
+
+            if (!updatedFootballer) {
+                return res.status(404).json({ message: 'Fußballspieler nicht gefunden.' });
+            }
+
+            // Senden des aktualisierten Fußballspielers zurück an den Client
+            res.status(200).json(updatedFootballer);
+        } catch (error) {
+            console.error("Fehler beim Aktualisieren des Fußballspielers:", error.message);
             res.status(500).json({ message: error.message });
         }
     }
@@ -58,6 +80,24 @@ class FootballPlayerController {
             res.status(500).json({ message: error.message });
         }
     }
+
+    static async deleteFootballerById(req, res) {
+        try {
+          const { id } = req.params;
+          const result = await Footballer.findOneAndDelete({ id });
+      
+          if (result) {
+            res.status(200).json({ message: `Fußballspieler mit der ID ${id} wurde erfolgreich gelöscht.` });
+          } else {
+            res.status(404).json({ message: `Fußballspieler mit der ID ${id} nicht gefunden.` });
+          }
+        } catch (error) {
+          console.error("Fehler beim Löschen des Fußballspielers:", error.message);
+          res.status(500).json({ message: error.message });
+        }
+      }
+      
+      
     static async incrementUserLikes(req, res) {
         try {
             const { id } = req.params; // ID aus den URL-Parametern extrahieren
