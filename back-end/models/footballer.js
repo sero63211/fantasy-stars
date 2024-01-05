@@ -7,23 +7,27 @@ const fotballerSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: false
+    },
+    description: {
+        type: String,
+        required: false
     },
     klub: {
         type: String,
-        required: true
+        required: false
     },
     nationalitaet: {
         type: String,
-        required: true
+        required: false
     },
     alter: {
         type: Number,
-        required: true
+        required: false
     },
     position: {
         type: String,
-        required: true
+        required: false
     },
     bild: {
         type: String, 
@@ -31,7 +35,7 @@ const fotballerSchema = new mongoose.Schema({
     },
     marktwert: {
         type: Number,
-        required: true
+        required: false
     },
     likes: {
         type: Number,
