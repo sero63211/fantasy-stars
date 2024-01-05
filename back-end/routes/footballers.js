@@ -22,6 +22,12 @@ MongoClient.connect(process.env.MONGODB_URI, (err, client) => {
     router.delete("/deleteAllFootballers", (req, res) => {
         FootballPlayerController.deleteAllFootballers(req,res);
     });
+
+    router.delete('/deleteFootballer/:id', FootballPlayerController.deleteFootballerById);
+
+
+    router.put('/updateFootballers/:id', FootballPlayerController.updateFootballer);
+
     router.put('/likes/:id', FootballPlayerController.incrementUserLikes);
     
     router.put('/dislikes/:id', FootballPlayerController.decrementUserLikes);
