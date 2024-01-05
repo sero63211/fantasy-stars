@@ -1,0 +1,180 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrolling on the body itself */
+}
+
+/* ItemDetailScreen.css */
+.detail-container {
+    max-width: 800px; /* Or whatever max width you prefer */
+    margin: auto; /* Center the container */
+    padding: 20px;
+  }
+  
+  .detail-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .detail-table-container {
+    overflow-x: auto; /* In case the table is too wide for the container */
+  }
+  
+  .detail-table {
+    width: auto; /* Tabelle passt sich dem Inhalt an */
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    background-color: white; 
+  }
+  .detail-table th, .detail-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd; /* Optional for borders in the table */
+  }
+  
+  .detail-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .detail-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .detail-button, .detail-edit-button {
+    margin-bottom: 10px; /* Space between buttons */
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .description-cell {
+    max-height: 200px; /* Maximum height to match the image cell */
+    overflow: auto; /* Allow scrolling if content is too large */
+  }
+  
+  .detail-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .detail-table th,
+  .detail-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    vertical-align: top; /* Align content to the top */
+  }
+  
+  .image-cell {
+    width: 200px; /* Set a fixed width */
+    height: auto; /* Height is automatic to fit content */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns image and description in the center */
+    justify-content: flex-start; /* Align content to the top */
+  }
+  
+  .detail-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* The image will fit within the dimensions without stretching */
+  }
+  
+  .description-text {
+    width: 100%; /* Take up the full width of the cell */
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Add some space between the image and the text */
+  }
+  .description-cell {
+    grid-column: 3; /* Position in the third column */
+    grid-row: 2 / span 6; /* Span from the second row to the end */
+    align-self: start; /* Align to the top of the cell */
+    max-width: 200px; /* Set a fixed width to match the image cell */
+    max-height: calc(100% - 200px); /* Set max height subtracting the image cell's height */
+    overflow-y: auto; /* Allow vertical scrolling if content is too tall */
+  }
+  
+
+  .edit-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .edit-form-container {
+    width: 100%; /* oder eine bestimmte Breite nach Wahl */
+    max-width: 600px; /* Maximale Breite */
+    margin: 0 auto; /* Zentriert den Container */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Leichter Schatten für Tiefe */
+    background: #fff; /* Hintergrundfarbe */
+    border-radius: 10px; /* Abgerundete Ecken */
+  }
+  
+  .edit-detail-table {
+    width: 100%; /* Volle Breite des Containers */
+    margin-bottom: 20px; /* Abstand unten */
+  }
+  
+  .edit-detail-table th, .edit-detail-table td {
+    text-align: left; /* Linksbündige Ausrichtung */
+    padding: 8px; /* Innenabstand */
+    border-bottom: 1px solid #ddd; /* Linie zwischen den Zeilen */
+  }
+  
+  .edit-detail-actions {
+    display: flex;
+    justify-content: space-between; /* Platz zwischen den Knöpfen */
+    padding: 10px 0; /* Abstand oben und unten */
+  }
+  
+  .edit-save-button, .edit-cancel-button {
+    padding: 10px 20px; /* Polsterung */
+    border: none; /* Kein Rand */
+    border-radius: 5px; /* Abgerundete Ecken */
+    cursor: pointer; /* Cursor-Stil */
+  }
+  
+  .edit-save-button {
+    background-color: #4CAF50; /* Grüne Farbe */
+    color: white; /* Weiße Schrift */
+  }
+  
+  .edit-cancel-button {
+    background-color: #f44336; /* Rote Farbe */
+    color: white; /* Weiße Schrift */
+  }
+  
+  .footballer-image {
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;    /* Behält das Seitenverhältnis bei, während die maximale Breite eingehalten wird */
+    height: auto;   /* Behält das Seitenverhältnis bei, während die maximale Höhe eingehalten wird */
+    object-fit: contain; /* Stellt sicher, dass das gesamte Bild sichtbar ist */
+  }
+  
+
+  .create-detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Stellt sicher, dass der Container mindestens so hoch wie der Viewport ist */
+  }
+  
+  .create-form-container {
+    width: 100%; /* Nutzt die gesamte verfügbare Breite */
+    max-width: 500px; /* Setzt eine maximale Breite */
+    margin: 20px; /* Etwas Abstand */
+    /* Weitere Stile nach Bedarf */
+  }
+  
+  .error-message {
+    min-height: 20px; /* Reserviert Platz für die Fehlermeldung */
+    color: red; /* Stil für die Fehlermeldung */
+    margin-bottom: 10px; /* Etwas Abstand nach unten */
+  }
+  
