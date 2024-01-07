@@ -5,6 +5,7 @@ import useFootballers from "../domain/hooks";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/Football_field.svg.png";
 import { useEffect } from "react";
+import Footer from "../Components/Footer";
 
 const MainScreen: React.FC = () => {
   const { footballers, state, error, refresh } = useFootballers();
@@ -20,6 +21,10 @@ const MainScreen: React.FC = () => {
     });
   };
 
+  const handleErrorClick = () => {
+    navigate('/error', { state: { message: error?.message } });
+  };
+
   useEffect(() => {
     console.log("State: ", state);
     if (error) {
@@ -30,16 +35,15 @@ const MainScreen: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImage})`, // Your imported image
-        backgroundSize: "cover", // Ensures the background covers the entire div
-        backgroundPosition: "center", // Centers the background image
-        backgroundRepeat: "no-repeat", // Prevents the image from repeating
-        width: "100vw", // Full viewport width
-        height: "100vh", // Full viewport height
-        overflow: "auto", // Adds scrollbars if content overflows
+        backgroundImage: `url(${backgroundImage})`, 
+        backgroundSize: "cover", 
+        backgroundPosition: "center", 
+        backgroundRepeat: "no-repeat", 
+        width: "100vw", 
+        height: "100vh", 
+        overflow: "auto", 
       }}
     >
-      <Header />
       <h1>List of Footballers</h1>
       <div
         style={{
@@ -48,7 +52,7 @@ const MainScreen: React.FC = () => {
           overflowX: "auto",
           padding: "10px",
           whiteSpace: "nowrap",
-          height: "100vh", // Setzt die Höhe auf 100% der Viewport-Höhe
+          height: "100vh", 
         }}
       >
         <Card
@@ -68,20 +72,25 @@ const MainScreen: React.FC = () => {
         ))}
       </div>
       <div
-        style={{
-          position: "absolute",
-          bottom: "10px",
-          right: "10px",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          padding: "5px",
-          borderRadius: "5px",
-        }}
+       style={{
+        position: "absolute",
+        bottom: "60px", 
+        right: "10px",
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        padding: "5px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        zIndex: 1000 
+      }}
+        onClick={state === "error" ? handleErrorClick : undefined}
+
       >
         {state === "initial" && "Initial"}
         {state === "loading" && "Loading..."}
         {state === "error" && `Error: ${error?.message}`}
         {state === "success" && "Success"}
       </div>
+      <Footer />
     </div>
   );
 };

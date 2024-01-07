@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Footballer from "../Models/footballer";
 import "../Stylings/ItemDetailScreen.css";
 import backgroundImage from "../images/Football_field.svg.png";
+import Footer from "../Components/Footer";
 
 const ItemDetailScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -152,6 +153,8 @@ const ItemDetailScreen: React.FC = () => {
 
 
       </div>
+      <Footer/>
+
     </div>
   );
   
