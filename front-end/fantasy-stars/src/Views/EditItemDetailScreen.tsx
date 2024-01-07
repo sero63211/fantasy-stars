@@ -1,36 +1,48 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footballer from "../Models/footballer";
 import "../Stylings/ItemDetailScreen.css";
 import backgroundImage from "../images/Football_field.svg.png";
 
 const EditItemDetailScreen: React.FC = () => {
+
+  const [positions, setPositions] = useState([
+    "Torwart",
+    "Innenverteidiger",
+    "Außenverteidiger",
+    "Mittelfeldspieler",
+    "Defensiver Mittelfeldspieler",
+    "Zentraler Mittelfeldspieler",
+    "Offensiver Mittelfeldspieler",
+    "Flügelspieler",
+    "Stürmer",
+    "Mittelstürmer",
+  ]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const originalFootballer = location.state?.footballer as Footballer;
 
   const [footballer, setFootballer] = useState(originalFootballer);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFootballer({ ...footballer, [e.target.name]: e.target.value });
-  };
-  const [isDialogOpen, setDialogOpen] = useState(false);
-  const [tempImageUrl, setTempImageUrl] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageClick = () => {
-    setDialogOpen(true);
-    if (typeof footballer.bild === "string") {
-      setTempImageUrl(footballer.bild);
-    } else {
-      setTempImageUrl(""); // Setzen Sie einen Standardwert oder leeren String
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFootballer({ ...footballer, bild: URL.createObjectURL(file) });
     }
   };
 
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
-  };
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFootballer({ ...footballer, [e.target.name]: e.target.value });
+  };  
 
   const updateFootballer = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,38 +105,25 @@ const EditItemDetailScreen: React.FC = () => {
         <h2 className="edit-detail-title">
           Edit Details of {originalFootballer.name}
         </h2>
-        <img
-          src={
-            typeof footballer.bild === "string"
-              ? footballer.bild
-              : footballer.bild instanceof File
-              ? URL.createObjectURL(footballer.bild)
-              : "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
-          }
-          alt={footballer.name}
-          onClick={handleImageClick}
-          className="footballer-image"
-        />
-        {isDialogOpen && (
-          <div className="dialog-overlay">
-            <div className="dialog">
-              <input
-                type="text"
-                value={tempImageUrl}
-                onChange={(e) => setTempImageUrl(e.target.value)}
-              />
-              <button
-                onClick={() => {
-                  setFootballer({ ...footballer, bild: tempImageUrl });
-                  handleCloseDialog();
-                }}
-              >
-                Save URL
-              </button>
-              <button onClick={handleCloseDialog}>Close</button>
-            </div>
-          </div>
-        )}
+        <div>
+          <img
+            src={
+              typeof footballer.bild === "string"
+                ? footballer.bild
+                : "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
+            }
+            alt={footballer.name}
+            className="footballer-image"
+            onClick={handleImageClick}
+          />
+          <input
+            type="file"
+            accept="image/jpeg"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+        </div>
         <table className="edit-detail-table">
           <tbody>
             <th>Name:</th>
@@ -182,12 +181,18 @@ const EditItemDetailScreen: React.FC = () => {
             <tr>
               <th>Position:</th>
               <td>
-                <input
-                  type="text"
+                <select
                   name="position"
                   value={footballer.position}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Wähle eine Position</option>
+                  {positions.map((position) => (
+                    <option key={position} value={position}>
+                      {position}
+                    </option>
+                  ))}
+                </select>
               </td>
             </tr>
             <tr>

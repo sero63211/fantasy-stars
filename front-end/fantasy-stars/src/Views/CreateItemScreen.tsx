@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footballer from "../Models/footballer";
 import "../Stylings/ItemDetailScreen.css";
-import backgroundImage from '../images/Football_field.svg.png'
+import backgroundImage from "../images/Football_field.svg.png";
 
 const CreateItemScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -19,34 +19,44 @@ const CreateItemScreen: React.FC = () => {
     bild: undefined,
     likes: 0,
   };
+
+  const [positions, setPositions] = useState([
+    "Torwart",
+    "Innenverteidiger",
+    "Außenverteidiger",
+    "Mittelfeldspieler",
+    "Defensiver Mittelfeldspieler",
+    "Zentraler Mittelfeldspieler",
+    "Offensiver Mittelfeldspieler",
+    "Flügelspieler",
+    "Stürmer",
+    "Mittelstürmer",
+  ]);
+  
+
+
   const [footballer, setFootballer] = useState(initialFootballer);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [tempImageUrl, setTempImageUrl] = useState("");
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFootballer({ ...footballer, [e.target.name]: e.target.value });
-  };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageClick = () => {
-    setDialogOpen(true);
-    if (typeof footballer.bild === 'string') {
-      setTempImageUrl(footballer.bild);
-    } else {
-      setTempImageUrl(""); // Setzen Sie einen Standardwert oder leeren String
-    }
-  };
-  
-  const handleCloseDialog = () => {
-    setDialogOpen(false);
+    fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFootballer({ ...footballer, bild: e.target.files[0] });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFootballer({ ...footballer, bild: URL.createObjectURL(file) });
     }
   };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFootballer({ ...footballer, [e.target.name]: e.target.value });
+  };  
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -135,17 +145,27 @@ const CreateItemScreen: React.FC = () => {
       <div className="edit-form-container">
         <h2 className="edit-detail-title">Create New Footballer</h2>
         <p className="error-message">{errorMessage}</p>
-  
-        <img
-          src={
-            typeof footballer.bild === "string"
-              ? footballer.bild
-              : "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
-          }
-          alt={footballer.name}
-          className="footballer-image"
-        />
-  
+
+        <div>
+          <img
+            src={
+              typeof footballer.bild === "string"
+                ? footballer.bild
+                : "https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
+            }
+            alt={footballer.name}
+            className="footballer-image"
+            onClick={handleImageClick}
+          />
+          <input
+            type="file"
+            accept="image/jpeg"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+        </div>
+
         <table className="edit-detail-table">
           <tbody>
             <tr>
@@ -205,12 +225,18 @@ const CreateItemScreen: React.FC = () => {
             <tr>
               <th>Position:</th>
               <td>
-                <input
-                  type="text"
+                <select
                   name="position"
                   value={footballer.position}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Wähle eine Position</option>
+                  {positions.map((position) => (
+                    <option key={position} value={position}>
+                      {position}
+                    </option>
+                  ))}
+                </select>
               </td>
             </tr>
             <tr>
@@ -226,7 +252,7 @@ const CreateItemScreen: React.FC = () => {
             </tr>
           </tbody>
         </table>
-  
+
         <div className="edit-detail-actions">
           <button onClick={createFootballer} className="create-save-button">
             Create Footballer
@@ -238,7 +264,6 @@ const CreateItemScreen: React.FC = () => {
       </div>
     </div>
   );
-  
 };
 
 export default CreateItemScreen;
