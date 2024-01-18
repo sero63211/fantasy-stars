@@ -6,14 +6,14 @@
   }
   
   .background {
-    flex: 1; /* Take up the remaining space */
+    flex: 1; 
     background: url('../images/login-screen-image.jpg') no-repeat center center;
     background-size: cover;
   }
   
   
   .login-container {
-    flex-basis: 500px; /* Adjust this to set the width of the form container */
+    flex-basis: 500px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@
   
   .login-box {
     width: 100%;
-    max-width: 400px; /* Set max-width of login box */
+    max-width: 400px; 
     margin: auto;
     padding: 2rem;
     background: #fff;
@@ -32,7 +32,6 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
-    /* You might need an actual avatar image or SVG here */
   }
   
   h1 {
@@ -44,7 +43,7 @@
     margin-bottom: 1rem;
   }
   
-  input[type="email"],
+  input[type="text"],
   input[type="password"] {
     width: 100%;
     padding: 0.5rem;
@@ -94,4 +93,7 @@
   .signup-link:hover {
     text-decoration: underline;
   }
-  
+
+  .error-input {
+    border: 1px solid red;
+  }
