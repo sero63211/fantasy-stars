@@ -19,7 +19,7 @@ MongoClient.connect(process.env.MONGODB_URI, (err, client) => {
     });
 
     // Benutzererstellungs-Endpoint
-    router.post("/create", (req, res) => {
+    router.post("/registration", (req, res) => {
         UserController.createUser(req, res, db);
     });
 
