@@ -52,7 +52,7 @@ class FootballPlayerController {
             const updatedFootballer = await Footballer.findOneAndUpdate(
                 { id: id }, // Kriterium für die Suche nach dem Fußballspieler
                 updateData, // Aktualisierungsdaten
-                { new: true } // Gibt das aktualisierte Dokument zurück
+                { new: true } // Gibt das aktualisierte Dokument zurückzurückzurück≥≥
             );
 
             if (!updatedFootballer) {

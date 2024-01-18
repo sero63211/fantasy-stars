@@ -1,76 +1,56 @@
-// Importieren Sie das Mongoose-Modell
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 class UserController {
     static async handleLogin(req, res) {
-        const { username, password } = req.body;
-
-        if (!username || !password) {
-            return res.send({
-                success: false,
-                message: "Username and password are required",
-            });
-        }
-
         try {
-            // Verwenden Sie das User-Modell, um die Datenbank abzufragen
-            const user = await User.findOne({ username: username });
+            const { username, password } = req.body;
+
+            // Benutzer mit Mongoose suchen
+            const user = await User.findOne({ username });
+
             if (!user) {
-                return res.status(401).send({ success: false, message: "Invalid username or password" });
+                return res.status(401).send('Unauthorized');
             }
 
-            if (password === user.password) {
-                // Authentifizierung erfolgreich
-                res.status(200).send({
-                    success: true,
-                    message: "Login successful",
-                    user: {
-                        firstname: user.username,
-                    },
-                });
-            } else {
-                // Falsches Passwort
-                res.send({ success: false, message: "Invalid username or password" });
+            // Überprüfen, ob das Passwort korrekt ist
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                return res.status(401).send('Unauthorized');
             }
-        } catch (err) {
-            // Fehlerbehandlung
-            return res.status(500).send("Error occurred while trying to login");
+
+            res.status(200).send('Ok');
+        } catch (error) {
+            res.status(500).send('Internal Server Error');
         }
     }
 
     static async createUser(req, res) {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).send({
-                success: false,
-                message: "Username and password are required",
-            });
-        }
-
         try {
-            // Überprüfen, ob der Benutzer bereits existiert
-            const existingUser = await User.findOne({ username: username });
+            const { username, password } = req.body;
+
+            // Überprüfen, ob der Benutzername bereits existiert
+            const existingUser = await User.findOne({ username });
             if (existingUser) {
-                return res.status(400).send({
-                    success: false,
-                    message: "Username already exists",
-                });
+                return res.status(400).send('Username already exists');
             }
 
-            // Neuen Benutzer erstellen
-            const newUser = new User({ username, password });
-            const savedUser = await newUser.save();
+            // Passwort hashen
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Benutzer erfolgreich erstellt
-            res.status(201).send({
-                success: true,
-                message: "User created successfully",
-                userId: savedUser._id,
+            // Neuen Benutzer mit dem Modell erstellen
+            const newUser = new User({
+                username,
+                password: hashedPassword
             });
-        } catch (err) {
-            // Fehlerbehandlung
-            console.error(err);
-            return res.status(500).send("Error occurred while trying to create user");
+
+            // Neuen Benutzer in die Datenbank speichern
+            await newUser.save();
+
+            res.status(201).send('User created');
+        } catch (error) {
+            res.status(500).send('Internal Server Error');
         }
     }
 }
