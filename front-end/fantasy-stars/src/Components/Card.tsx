@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Footballer from "../Models/footballer";
 import heartIcon from "../images/heart.png";
 import heartFillIcon from "../images/heart.fill.png";
+import { useAuth } from "../AuthentificationState";
+import { log } from "console";
 
 interface CardProps {
   footballer: Footballer;
@@ -10,6 +12,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
+  const { loggedIn, setLoggedIn } = useAuth();
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const isEmpty =
@@ -64,7 +67,6 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
   };
 
   if (isEmpty) {
-    // Zeigt nur das Plus-Symbol an, wenn das footballer-Objekt leer ist
     return (
       <div
         onClick={onClick}
@@ -89,7 +91,7 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
       >
         <span
           style={{
-            fontSize: "4em", // Macht das Pluszeichen größer
+            fontSize: "4em", 
           }}
         >
           &#43;
@@ -100,7 +102,7 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
 
   return (
     <div
-      onClick={onClick}
+    {...loggedIn ==true ? {onClick}: null}
       style={{
         border: "1px solid black",
         borderRadius: "20px",
@@ -121,10 +123,10 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
     >
       <div
         style={{
-          width: "100%", // Full width
-          height: "140px", // Fix height of image container
+          width: "100%",
+          height: "140px",
           position: "relative",
-          marginBottom: "10px", // Space below the image container
+          marginBottom: "10px", 
         }}
       >
         {footballer.bild ? (
@@ -178,7 +180,9 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
           marginTop: "auto",
         }}
       >
+        {loggedIn == true ?
         <img
+        
           src={isHeartFilled ? heartFillIcon : heartIcon}
           alt="Herz"
           style={{
@@ -189,6 +193,8 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
           }}
           onClick={handleHeartClick}
         />
+      : 
+      null}
         <span>Gefällt {footballer.likes} mal</span>
       </div>
     </div>
