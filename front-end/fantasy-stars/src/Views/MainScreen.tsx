@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/Football_field.svg.png";
 import { useEffect } from "react";
 import Footer from "../Components/Footer";
+import { useAuth } from "../AuthentificationState";
 
 const MainScreen: React.FC = () => {
+  const { loggedIn, setLoggedIn } = useAuth();
   const { footballers, state, error, refresh } = useFootballers();
   const navigate = useNavigate();
 
@@ -55,11 +57,15 @@ const MainScreen: React.FC = () => {
           height: "100vh", 
         }}
       >
+        {loggedIn == true ?
         <Card
           footballer={{}}
           onCardChange={refresh}
           onClick={() => navigate("/create")}
         />
+        :
+        null
+      }
         {footballers.map((footballer, index) => (
           <div style={{ display: "inline-block", marginRight: "10px" }}>
             <Card
