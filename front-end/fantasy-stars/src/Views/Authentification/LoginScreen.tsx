@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../../Stylings/LoginScreen.css';
+import Footer from '../../Components/Footer';
 
 
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function LoginScreen() {
@@ -19,9 +17,8 @@ export default function LoginScreen() {
   };
 
   return (
-<div className="theme-provider" style={{ height: '100vh' }}>
+<div className="theme-provider" style={{ height: '100vh'}}>
   <div className="background">
-    {/* Background Image */}
   </div>
   
   <div className="login-container">
@@ -62,6 +59,7 @@ export default function LoginScreen() {
       </form>
     </div>
   </div>
+  <Footer />
 </div>
 
   );

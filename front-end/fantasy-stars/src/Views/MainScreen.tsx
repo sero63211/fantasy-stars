@@ -93,6 +93,7 @@ const MainScreen: React.FC = () => {
       <Footer />
     </div>
   );
+
 };
 
 export default MainScreen;

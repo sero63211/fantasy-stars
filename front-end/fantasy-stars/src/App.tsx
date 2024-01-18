@@ -7,6 +7,7 @@ import AboutScreen from "./Views/AboutScreen";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import ErrorDisplay from "./Views/ErrorDisplay";
+import LoginScreen from "./Views/Authentification/LoginScreen";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/create" element={<CreateItemScreen />} />
             <Route path="/about" element={<AboutScreen />} />
             <Route path="/error" element={<ErrorDisplay />} />
+            <Route path="/login" element={<LoginScreen />} />
           </Routes>
         </div>
       </div>

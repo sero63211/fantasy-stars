@@ -1,5 +1,6 @@
 .header {
     display: flex;
+    justify-content: space-between; /* Buttons ganz rechts ausrichten */
     align-items: center;
     padding: 10px;
     border: 1px solid black;
@@ -14,4 +15,25 @@
 .header img {
     height: 100px;
     width: 100px;
+}
+
+/* Login und Logout Buttons */
+.header button {
+    width: 100px;
+    padding: 8px 16px; /* Anpassung der Höhe und Breite */
+    cursor: pointer;
+    color: white;
+    border: none; /* Entfernen der Standard-Rahmen */
+    border-radius: 5px; /* Abrundung der Ecken */
+}
+
+/* Stile für den Login-Button */
+.header button.login {
+    background-color:white;
+    color: black;
+}
+
+/* Stile für den Logout-Button */
+.header button.logout {
+    background-color: red;
 }
