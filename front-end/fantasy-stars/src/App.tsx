@@ -8,9 +8,11 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import ErrorDisplay from "./Views/ErrorDisplay";
 import LoginScreen from "./Views/Authentification/LoginScreen";
+import { AuthProvider } from "./AuthentificationState";
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -36,6 +38,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 
