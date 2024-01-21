@@ -84,19 +84,13 @@ export default function LoginScreen() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="remember-me">
-              <input type="checkbox" id="remember" name="remember" />
-              <label htmlFor="remember">Remember me</label>
-            </div>
             <div className="submit-container">
               <button type="button" onClick={handleSubmit}>
                 Sign In
               </button>
-            </div>
-            <div className="links-container">
-              <a href="#" className="signup-link">
-                Don't have an account? Sign Up
-              </a>
+              <button onClick={() => navigate("/")} style={{background:"red"}}>
+              Cancel
+              </button>
             </div>
           </form>
         </div>

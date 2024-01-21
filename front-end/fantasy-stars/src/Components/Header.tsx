@@ -21,8 +21,10 @@ const Header: React.FC = () => {
 
     return (
         <header className="header">
-            <h1>Fantasy Stars</h1>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1>Fantasy Stars</h1>
             <img src={logo} alt="Fantasy Stars Logo" />
+          </div>
     
             {loggedIn == 
             false ? 
