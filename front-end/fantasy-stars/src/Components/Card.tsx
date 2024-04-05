@@ -102,7 +102,7 @@ const Card: React.FC<CardProps> = ({ footballer, onCardChange, onClick }) => {
 
   return (
     <div
-    {...loggedIn ==true ? {onClick}: null}
+    {...{onClick}}
       style={{
         border: "1px solid black",
         borderRadius: "20px",

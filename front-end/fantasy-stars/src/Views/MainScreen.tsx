@@ -1,5 +1,4 @@
 import Card from "../Components/Card";
-import Header from "../Components/Header";
 import Footballer from "../Models/footballer";
 import useFootballers from "../domain/hooks";
 import { useNavigate } from "react-router-dom";

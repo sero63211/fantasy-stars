@@ -12,8 +12,9 @@ import { AuthProvider } from "./AuthentificationState";
 
 function App() {
   return (
-    <AuthProvider>
     <Router>
+
+    <AuthProvider>
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
@@ -37,8 +38,9 @@ function App() {
           </Routes>
         </div>
       </div>
-    </Router>
     </AuthProvider>
+    </Router>
+
   );
 }
 

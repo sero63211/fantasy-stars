@@ -4,19 +4,13 @@ import Footballer from "../Models/footballer";
 import "../Stylings/ItemDetailScreen.css";
 import backgroundImage from "../images/Football_field.svg.png";
 import Footer from "../Components/Footer";
+import { useAuth } from "../AuthentificationState";
 
 const ItemDetailScreen: React.FC = () => {
+  const { loggedIn, setLoggedIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const footballer = location.state?.footballer as Footballer;
-
-  const getStringOrPlaceholder = (
-    value: string | undefined,
-    placeholder: string
-  ) => {
-    return value || `${placeholder} nicht vorhanden`;
-  };
-
 
   const handleDelete = async (footballer: Footballer) => {
     const endpoint = `http://localhost:3001/footballer/deleteFootballer/${footballer.id}`;
@@ -101,13 +95,13 @@ const ItemDetailScreen: React.FC = () => {
           </tbody>
         </table>
         <div className="edit-detail-actions" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-  
-  <div style={{ display: 'flex' }}> {/* Neues Div für Edit und Delete */}
+  {loggedIn ? 
+  <div style={{ display: 'flex' }}> 
     <button
       onClick={() => navigate(`/edit/${footballer.id}`, { state: { footballer } })}
       className="edit-save-button"
       style={{
-        backgroundColor: "#4CAF50", // Grün für Edit
+        backgroundColor: "#4CAF50", 
         color: "white",
         border: "none",
         borderRadius: "5px",
@@ -121,24 +115,24 @@ const ItemDetailScreen: React.FC = () => {
     <button
       onClick={(event) => handleDelete(footballer)}
       style={{
-        backgroundColor: "#ff4d4d", // Rot für Delete
+        backgroundColor: "#ff4d4d", 
         color: "white",
         border: "none",
         borderRadius: "5px",
         padding: "10px 15px",
         cursor: "pointer",
-        marginLeft: "5px", // Minimaler Abstand zwischen den Buttons
+        marginLeft: "5px", 
       }}
     >
       Löschen
     </button>
   </div>
-
+: null}
   <button
     onClick={() => navigate("/")}
     className="edit-cancel-button"
     style={{
-      backgroundColor: "#007bff", // Blau für Back to All Items
+      backgroundColor: "#007bff", 
       color: "white",
       border: "none",
       borderRadius: "5px",
